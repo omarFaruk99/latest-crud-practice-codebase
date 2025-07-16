@@ -1,32 +1,32 @@
 // ======================= Imports =======================
 "use client";
 import callToast, {
-    formattedDateTime, getFilterSearchParams,
+    formattedDateTime,
+    getFilterSearchParams,
     handleDelete,
     tablePerPageOptions,
 } from "@/app/utilis/helper";
-import {paginationTemplate} from "@/app/utilis/templates";
-import {baseUrl} from "@/app/utilis/webinfo";
+import { paginationTemplate } from "@/app/utilis/templates";
+import { baseUrl } from "@/app/utilis/webinfo";
 import ActionTemplate from "@/components/ActionTemplate";
 import Label from "@/components/Label";
 import PageHeading from "@/components/PageHeading";
-import {LayoutContext} from "@/layout/context/layoutcontext";
-import {useFetch} from "@/layout/hooks/useFetch";
-import {InventoryTrace} from "@/types/inventoryTrace";
-import {Column} from "primereact/column";
-import {ConfirmPopup} from "primereact/confirmpopup";
-import {DataTable} from "primereact/datatable";
-import {Dialog} from "primereact/dialog";
-import {Dropdown} from "primereact/dropdown";
-import {InputNumber} from "primereact/inputnumber";
-import {Toast} from "primereact/toast";
-import {useContext, useEffect, useRef, useState} from "react";
-import {log} from "node:util";
+import { LayoutContext } from "@/layout/context/layoutcontext";
+import { useFetch } from "@/layout/hooks/useFetch";
+import { InventoryTrace } from "@/types/inventoryTrace";
+import { Column } from "primereact/column";
+import { ConfirmPopup } from "primereact/confirmpopup";
+import { DataTable } from "primereact/datatable";
+import { Dialog } from "primereact/dialog";
+import { Dropdown } from "primereact/dropdown";
+import { InputNumber } from "primereact/inputnumber";
+import { Toast } from "primereact/toast";
+import { useContext, useEffect, useRef, useState } from "react";
 
 // ======================= Component =======================
 const IngredientTestTwo = () => {
     // ========== Context ==========
-    const {accessToken} = useContext(LayoutContext);
+    const { accessToken } = useContext(LayoutContext);
 
     // ========== State ==========
     // Table data
@@ -67,16 +67,16 @@ const IngredientTestTwo = () => {
 
     // ::::::::::::::::::::::column specific filters function
     const handleFilter = async (name: string, value: number | string) => {
-        const updatedFilters = {...filters, [name]: value};
+        const updatedFilters = { ...filters, [name]: value };
         const queryParams = getFilterSearchParams(updatedFilters);
         setFilterQueryParams(queryParams);
         setFilters(updatedFilters);
-    }
+    };
 
     const handleFilterChange = (name: string, value: any) => {
-        setFilters({...filters, [name]: value});
-    }
-    // ::::::::::::::::
+        setFilters({ ...filters, [name]: value });
+    };
+    // ::::::::::::::::::::::End
 
     // ========== Refs ==========
     const toast = useRef<Toast>(null);
@@ -95,7 +95,7 @@ const IngredientTestTwo = () => {
     } = useFetch(endpoint, [update, filterQueryParams]);
 
     // Ingredient dropdown data
-    const {data: ingredientsList} = useFetch(
+    const { data: ingredientsList } = useFetch(
         `/api/food_ingredient?page=0&size=20${
             filterIngredientsName
                 ? `&filters=[["name","like","${filterIngredientsName}"]]`
@@ -105,7 +105,7 @@ const IngredientTestTwo = () => {
     );
 
     // Supplier dropdown data
-    const {data: suppliersList} = useFetch("/api/supplier?page=0&size=20");
+    const { data: suppliersList } = useFetch("/api/supplier?page=0&size=20");
 
     // ========== Effects ==========
     // Update current page when pagination changes
@@ -119,7 +119,7 @@ const IngredientTestTwo = () => {
         if (foodIngre) {
             setFoodIngredientData(foodIngre);
         } else {
-            setFoodIngredientData([])
+            setFoodIngredientData([]);
         }
     }, [foodIngre, notFound]);
 
@@ -127,8 +127,8 @@ const IngredientTestTwo = () => {
     useEffect(() => {
         if (ingredientsList) {
             const modifyData = ingredientsList.map((data: any) => {
-                const {id, name} = data;
-                return {id, name};
+                const { id, name } = data;
+                return { id, name };
             });
             setIngredientsOptionData(modifyData);
         }
@@ -138,8 +138,8 @@ const IngredientTestTwo = () => {
     useEffect(() => {
         if (suppliersList) {
             const modifyData = suppliersList.map((data: any) => {
-                const {id, name} = data;
-                return {id, name};
+                const { id, name } = data;
+                return { id, name };
             });
             setSuppliersOption(modifyData);
         }
@@ -155,7 +155,7 @@ const IngredientTestTwo = () => {
 
     // Update form state
     const handleChange = (name: string, value: any) => {
-        setIngredient({...ingredient, [name]: value});
+        setIngredient({ ...ingredient, [name]: value });
     };
 
     // Create or update ingredient
@@ -249,8 +249,8 @@ const IngredientTestTwo = () => {
     // ========== Render ==========
     return (
         <div className={"card"}>
-            <Toast ref={toast}/>
-            <ConfirmPopup/>
+            <Toast ref={toast} />
+            <ConfirmPopup />
             <PageHeading
                 title={"Test Ingredient"}
                 isCreate={true}
@@ -275,51 +275,60 @@ const IngredientTestTwo = () => {
                 }}
                 paginatorTemplate={paginationTemplate}
                 rowsPerPageOptions={tablePerPageOptions}
-                filterDisplay={'row'} //::::::::::::::::column specific filters props
+                filterDisplay={"row"} //::::::::::::::::column specific filters props
             >
                 <Column
                     header={"Ingredient"}
                     body={(rowData) => rowData.food_ingredient.name}
                     //::::::::::::::::column specific filters dropdown
-                    filter filterField={'food'} showFilterMenu={false}
+                    filter
+                    filterField={"food"}
+                    showFilterMenu={false}
                     filterElement={(options) => {
                         console.log(options);
                         return (
-                            <Dropdown value={filters.food_ingredient_id}
-                                      options={ingredientsOptionData}
-                                      optionLabel={'name'}
-                                      filter
-                                      showClear
-                                      showFilterClear
-                                      placeholder={"Food ingredient"}
-                                      onChange={(e) => {
-                                          handleFilterChange("food_ingredient_id", e?.value);
-                                          handleFilter("food_ingredient_id", e.value)
-                                      }}
-                                      onFilter={(e) => setFilterIngredientsName(e.filter)}
-                            />)
+                            <Dropdown
+                                value={filters.food_ingredient_id}
+                                options={ingredientsOptionData}
+                                optionLabel={"name"}
+                                filter
+                                showClear
+                                showFilterClear
+                                placeholder={"Food ingredient"}
+                                onChange={(e) => {
+                                    handleFilterChange(
+                                        "food_ingredient_id",
+                                        e?.value
+                                    );
+                                    handleFilter("food_ingredient_id", e.value);
+                                }}
+                                onFilter={(e) =>
+                                    setFilterIngredientsName(e.filter)
+                                }
+                            />
+                        );
                     }}
                     /*::::::::::::::::::*/
-                    style={{minWidth: "12rem"}}
+                    style={{ minWidth: "12rem" }}
                 />
                 <Column
                     header={"Supplier"}
                     body={(rowData) => rowData.supplier.name}
-                    style={{minWidth: "12rem"}}
+                    style={{ minWidth: "12rem" }}
                 />
-                <Column header={"Quantity"} field={"quantity"}/>
-                <Column header={"Total Amount"} field={"total_amount"}/>
+                <Column header={"Quantity"} field={"quantity"} />
+                <Column header={"Total Amount"} field={"total_amount"} />
                 <Column
                     header={"Purchase Date"}
                     body={(rowData) => formattedDateTime(rowData.event_time)}
-                    style={{minWidth: "10rem"}}
+                    style={{ minWidth: "10rem" }}
                 />
                 <Column
                     header={"Action"}
                     headerClassName={"flex justify-content-end w-full"}
                     body={(data) => {
-                        const {id, food_ingredient} = data;
-                        const ids: any = [{id}];
+                        const { id, food_ingredient } = data;
+                        const ids: any = [{ id }];
 
                         return (
                             <ActionTemplate
@@ -338,14 +347,14 @@ const IngredientTestTwo = () => {
             <Dialog
                 visible={ingredientDialog}
                 onHide={hideDialog}
-                style={{width: "32rem"}}
+                style={{ width: "32rem" }}
                 header={`${updatedId ? "Update" : "Create"} Ingredient`}
-                breakpoints={{"960px": "75vw", "641px": "90vw"}}
+                breakpoints={{ "960px": "75vw", "641px": "90vw" }}
                 modal
                 className="p-fluid"
             >
                 <div className="field">
-                    <Label label="Ingredient" required={true}/>
+                    <Label label="Ingredient" required={true} />
                     <Dropdown
                         value={ingredient.food_ingredient_id}
                         options={ingredientsOptionData}
@@ -361,7 +370,7 @@ const IngredientTestTwo = () => {
                     />
                 </div>
                 <div className="field">
-                    <Label label={"supplier"} required={true}/>
+                    <Label label={"supplier"} required={true} />
                     <Dropdown
                         placeholder={"Select Supplier"}
                         optionLabel={"name"}
@@ -374,7 +383,7 @@ const IngredientTestTwo = () => {
                     />
                 </div>
                 <div className="field">
-                    <Label label="Quantity" required={true}/>
+                    <Label label="Quantity" required={true} />
                     <InputNumber
                         id="quantity"
                         value={ingredient.quantity}
@@ -383,7 +392,7 @@ const IngredientTestTwo = () => {
                     />
                 </div>
                 <div className="field">
-                    <Label label="Total Amount" required={true}/>
+                    <Label label="Total Amount" required={true} />
                     <InputNumber
                         id="total_amount"
                         value={ingredient.total_amount}

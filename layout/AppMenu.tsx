@@ -33,11 +33,10 @@ const AppMenu = () => {
                     to: "/ingredientTestTwo",
                 },
                 {
-                    label: "Ingredient Test Three",
+                    label: "Ingredient Template",
                     icon: "pi pi-fw pi-home",
-                    to: "/ingredientTestThree",
+                    to: "/ingredientTemplate",
                 },
-
             ],
         },
         // {
