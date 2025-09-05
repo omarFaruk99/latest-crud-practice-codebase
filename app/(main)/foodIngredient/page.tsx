@@ -238,6 +238,9 @@ const FoodIngredientPage = () => {
                     field="ami valo achi"
                 />
                 <Column
+                    header="test restore --staged"
+                />
+                <Column
                     header="Supplier"
                     body={(rowData) => rowData.supplier.name}
                     style={{minWidth: "12rem"}}
