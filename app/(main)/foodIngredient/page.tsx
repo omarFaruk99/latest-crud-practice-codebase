@@ -234,7 +234,7 @@ const FoodIngredientPage = () => {
                     style={{minWidth: "12rem"}}
                 />
                 <Column
-                    header="Tumi amar jan"
+                    header="Tumi amar jan&moron"
                     field="Jan"
                 />
                 <Column
