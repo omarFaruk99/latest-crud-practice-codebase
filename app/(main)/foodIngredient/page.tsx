@@ -238,6 +238,11 @@ const FoodIngredientPage = () => {
                     field="ami valo achi"
                 />
                 <Column
+                    header={"want to merge with main"}
+                    field={"hello merge"}
+                />
+
+                <Column
                     header="Supplier"
                     body={(rowData) => rowData.supplier.name}
                     style={{minWidth: "12rem"}}
