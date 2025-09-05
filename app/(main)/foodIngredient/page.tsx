@@ -234,6 +234,11 @@ const FoodIngredientPage = () => {
                     style={{minWidth: "12rem"}}
                 />
                 <Column
+                    header="kamon acho kakku"
+                    field="ami valo achi"
+                />
+
+                <Column
                     header="Supplier"
                     body={(rowData) => rowData.supplier.name}
                     style={{minWidth: "12rem"}}
