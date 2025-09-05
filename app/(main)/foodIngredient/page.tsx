@@ -234,6 +234,10 @@ const FoodIngredientPage = () => {
                     style={{minWidth: "12rem"}}
                 />
                 <Column
+                    header="Tumi amar jan"
+                    field="Jan"
+                />
+                <Column
                     header="Supplier"
                     body={(rowData) => rowData.supplier.name}
                     style={{minWidth: "12rem"}}
