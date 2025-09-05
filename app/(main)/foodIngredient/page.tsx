@@ -234,7 +234,7 @@ const FoodIngredientPage = () => {
                     style={{minWidth: "12rem"}}
                 />
                 <Column
-                    header="kamon acho kakku and don"
+                    header="kamon acho kakku"
                     field="ami valo achi"
                 />
                 <Column
