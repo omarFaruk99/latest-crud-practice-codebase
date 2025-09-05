@@ -237,7 +237,6 @@ const FoodIngredientPage = () => {
                     header="kamon acho kakku"
                     field="ami valo achi"
                 />
-
                 <Column
                     header="Supplier"
                     body={(rowData) => rowData.supplier.name}
